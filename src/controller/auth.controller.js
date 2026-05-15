@@ -1,7 +1,7 @@
 const userModel = require("../models/user.model")
 const jwt = require("jsonwebtoken")
 const emailService = require("../services/email.service")
-const tokenBlockListModel = require("../models/tokenBlockList.model")
+const tokenBlockListModel = require("../models/blackList.model")
 // User Registration Controller
 // POST /api/auth/register
 

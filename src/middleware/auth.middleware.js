@@ -1,6 +1,7 @@
 const accountModel = require("../models/account.model")
 const userModel = require("../models/user.model")
 const jwt = require("jsonwebtoken")
+const tokenBlockListModel = require("../models/blackList.model")
 
 async function authMiddleware(req,res,next)
 {
