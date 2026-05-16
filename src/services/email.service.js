@@ -3,7 +3,10 @@ const nodemailer = require('nodemailer');
 const dns = require("dns");
 
 // Fix IPv6 issue
-dns.setDefaultResultOrder("ipv4first");
+// Fix IPv6 issue (only if supported by Node version)
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder("ipv4first");
+}
 
 const transporter = require("nodemailer").createTransport({
   host: "smtp.gmail.com",
@@ -21,9 +24,9 @@ const transporter = require("nodemailer").createTransport({
 // Verify the connection configuration
 transporter.verify((error, success) => {
   if (error) {
-    console.error('Error connecting to email server:', error);
+    console.log('⚠️ Warning: Email server connection failed:', error.message);
   } else {
-    console.log('Email server is ready to send messages');
+    console.log('📧 Email server is ready to send messages');
   }
 });
 

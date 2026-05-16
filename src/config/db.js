@@ -6,12 +6,18 @@
 const moongoose = require('mongoose');// Import the Mongoose library to connect to MongoDB
 
 async function connectDB() {
+    if (!process.env.MONGO_URI) {
+        console.log("❌ MONGO_URI is not defined in environment variables");
+        throw new Error("MONGO_URI is missing");
+    }
+
     try {
+        console.log("⏳ Connecting to MongoDB...");
         await moongoose.connect(process.env.MONGO_URI);
-        console.log('Server is connected to the database');
+        console.log('✅ Server is connected to the database');
     } catch (err) {
-        console.error("Database connection error:", err);
-        process.exit(1);
+        console.log("❌ Database connection error:", err.message);
+        throw err;
     }
 }
 

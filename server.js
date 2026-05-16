@@ -15,20 +15,22 @@ const connectDB = require('./src/config/db');
 
 const PORT = process.env.PORT || 3000;
 
+console.log("🚀 Starting server initialization...");
+
 async function startServer() {
   try {
-    // ✅ Wait for DB connection
+    console.log("📡 Attempting to connect to database...");
     await connectDB();
 
-    console.log("DB connected successfully");
+    console.log("✅ DB connected successfully");
 
-    // ✅ Start server AFTER DB is ready
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+      console.log(`🚀 Server is running on port ${PORT}`);
     });
 
   } catch (error) {
-    console.error("Failed to connect DB:", error);
+    console.log("❌ CRITICAL: Failed to start server:");
+    console.log(error);
     process.exit(1);
   }
 }
