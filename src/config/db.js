@@ -5,16 +5,14 @@
 // src/config/db.js
 const moongoose = require('mongoose');// Import the Mongoose library to connect to MongoDB
 
-function connectDB() // Define a function to connect to the database
-{
-    moongoose.connect(process.env.MONGO_URI)   // Use the MONGO_URI environment variable to connect to the database
-    .then(()=> {
-        console.log('server is connected to the database')// Log a success message if the connection is successful
-    })
-    .catch((err=>{// Log an error message if the connection fails
-        console.log("server is connected to db")
-        process.exit(1);// Exit the process with a failure code if the connection fails
-    }))
+async function connectDB() {
+    try {
+        await moongoose.connect(process.env.MONGO_URI);
+        console.log('Server is connected to the database');
+    } catch (err) {
+        console.error("Database connection error:", err);
+        process.exit(1);
+    }
 }
 
 module.exports = connectDB;// Export the connectDB function so it can be used in other parts of the application, such as server.js
