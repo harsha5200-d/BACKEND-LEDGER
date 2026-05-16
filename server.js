@@ -24,22 +24,16 @@ process.on('uncaughtException', (err) => {
 
 const PORT = process.env.PORT || 3000;
 
-console.log("🚀 Starting server initialization...");
-
 async function startServer() {
   try {
-    console.log("📡 Attempting to connect to database...");
     await connectDB();
 
-    console.log("✅ DB connected successfully");
-
     app.listen(PORT, () => {
-      console.log(`🚀 Server is running on port ${PORT}`);
+      console.log(`🚀 Server running on port ${PORT}`);
     });
 
   } catch (error) {
-    console.log("❌ CRITICAL: Failed to start server:");
-    console.log(error);
+    console.log("❌ Server failed to start:", error.message);
     process.exit(1);
   }
 }

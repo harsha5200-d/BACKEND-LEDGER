@@ -24,9 +24,9 @@ const transporter = require("nodemailer").createTransport({
 // Verify the connection configuration
 transporter.verify((error, success) => {
   if (error) {
-    console.log('⚠️ Warning: Email server connection failed:', error.message);
+    console.log('⚠️ Email service warning:', error.message);
   } else {
-    console.log('📧 Email server is ready to send messages');
+    console.log('📧 Email service ready');
   }
 });
 
