@@ -6,17 +6,25 @@
 const moongoose = require('mongoose');// Import the Mongoose library to connect to MongoDB
 
 async function connectDB() {
-    if (!process.env.MONGO_URI) {
+    const uri = process.env.MONGO_URI;
+    if (!uri) {
         console.log("❌ MONGO_URI is not defined in environment variables");
         throw new Error("MONGO_URI is missing");
     }
 
+    // Mask password for security but show start/end of URI
+    const maskedUri = uri.replace(/:([^@]+)@/, ":****@");
+    console.log(`📡 Using URI: ${maskedUri.substring(0, 20)}...${maskedUri.substring(maskedUri.length - 10)}`);
+
     try {
         console.log("⏳ Connecting to MongoDB...");
-        await moongoose.connect(process.env.MONGO_URI);
+        await moongoose.connect(uri, {
+            serverSelectionTimeoutMS: 5000 // Fail faster (5s) so we can see the error
+        });
         console.log('✅ Server is connected to the database');
     } catch (err) {
-        console.log("❌ Database connection error:", err.message);
+        console.log("❌ Database connection error details:");
+        console.log(err); // Log the full error object
         throw err;
     }
 }
