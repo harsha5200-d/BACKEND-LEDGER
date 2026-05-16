@@ -7,6 +7,10 @@ const transactionRoutes = require("./routes/transaction.routes")
 
 const app = express();
 
+app.use(require('cors')({
+    origin: true, // Allow all origins
+    credentials: true // Allow cookies
+}));
 app.use(express.json())
 app.use(cookieParser())
 
